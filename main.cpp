@@ -1,0 +1,956 @@
+#include "TXLib.h"
+
+/* Образец цикла рисования грибов
+for(int x=110; x<=1120 ; x=x+40)
+{
+    for(int y=450; y<=1120 ; y=y+40)
+    {
+        drawGreb(x,y,r);
+        r=random(0.5,2);
+    }
+}
+*/
+
+void drawSky()
+{
+//небо1
+    txSetColor (TX_LIGHTBLUE);
+    txSetFillColor (TX_LIGHTBLUE );
+    txRectangle (0, 0, 1200, 600);
+}
+
+void drawLand()
+{
+//земля
+    txSetColor (TX_LIGHTGREEN );
+    txSetFillColor (TX_LIGHTGREEN );
+    txRectangle (0,450,1200,700);
+}
+
+void drawLand2()
+{
+//земля
+    txSetColor (TX_GREEN );
+    txSetFillColor (TX_GREEN );
+    txRectangle (0,450,1200,700);
+}
+
+void drawSky2()
+{
+//небо2
+    txSetColor (TX_BLUE);
+    txSetFillColor (TX_BLUE );
+    txRectangle (0, 0, 1200, 600);
+
+}
+
+void drawHouse()
+{
+
+    //дом
+    txSetColor (TX_YELLOW);
+    txSetFillColor (TX_YELLOW);
+    txRectangle (500,300, 1000, 600);
+    //крыша
+    txSetColor (TX_RED);
+    txSetFillColor (TX_RED);
+    POINT star[3] = {{500, 300}, {750, 100}, {1000, 300}};
+    txPolygon (star, 3);
+    //окно
+    txSetColor (TX_BLACK, 5);
+    txSetFillColor (TX_NULL);
+    txRectangle (620, 390, 760,  510);
+    //линии окна
+    txLine(680,390,680,510);
+    txLine(620,450,760,450);
+
+    //txSetColor (TX_YELLOW);
+    //txSetFillColor (TX_YELLOW);
+    txRectangle (500,300, 1000, 600);
+}
+
+void drawDoor(int x)
+{
+    txSetColor (TX_BLACK, 1);
+    txSetFillColor (TX_YELLOW);
+    txRectangle (x+490-490, 430, 500, 600);
+}
+
+void drawtrees(int x,int y)
+{
+
+
+    txSetColor (TX_BROWN );
+    txSetFillColor (TX_BROWN );
+    txRectangle (x+120-120,y+340-340,x+150-120, y+560-340);
+    txSetColor (TX_GREEN);
+    txSetFillColor (TX_GREEN);
+    txEllipse (x+100-120,y+210-340, x+170-120,y+340-340);
+    txEllipse (x+100-120,y+300-340, x+170-120,y+440-340);
+ }
+
+void drawtreese(int x)
+{
+
+    txSetColor (TX_BROWN );
+    txSetFillColor (TX_BROWN );
+    txRectangle (x+120-120,380,x+150-120, 600);
+    txSetColor (TX_GREEN);
+    txSetFillColor (TX_GREEN);
+    txEllipse (x+100-120,250, x+170-120,380);
+    txEllipse (x+100-120,340, x+170-120,480);
+}
+
+void drawSun(int x)
+{
+    //солнце
+    txSetColor (TX_YELLOW);
+    txSetFillColor (TX_YELLOW);
+    txCircle (x, 130, 100);
+}
+
+void drawOzero1(int y)
+{
+    txSetColor (TX_LIGHTBLUE);
+    txSetFillColor (TX_LIGHTBLUE);
+    txPie (100, y+480-480, 1100, y+1200-480, 0, 180);
+}
+
+void drawOzero2(int y)
+{
+    txSetColor (TX_LIGHTBLUE);
+    txSetFillColor (TX_LIGHTBLUE);
+    txPie (100, y+480-480, 1100, y+1200-480, 180, 180);
+}
+
+void drawlodka(int x, int y)
+{
+//подлодка
+    txSetColor (TX_GRAY);
+    txSetFillColor (TX_GRAY);
+    txEllipse   (x+270-570,y+440-440,x+980-570,y+700-440);
+
+    txRectangle (x+570-570,y+330-440,x+690-570,y+460-440);
+
+    txRectangle (x+620-570,y+280-440,x+660-570,y+340-440);
+    txRectangle (x+540-570,y+280-440,x+630-570,y+310-440);
+}
+
+void drawCloud(int x)
+{
+    //облако
+    txSetColor (TX_WHITE);
+    txSetFillColor (TX_WHITE);
+    txEllipse (x, 30, x+790-300, 220);
+}
+
+void drawMan(int x, int y, COLORREF col)
+{
+//390=x
+    txSetColor ( col, 5);
+    txSetFillColor (col);
+    txCircle(x+390-390,y+450-450,15);
+    txLine ( x+390-390,y+450-450,x+390-390,y+560-450);
+    txLine ( x+390-390,y+480-450,x+440-390,y+510-450);
+    txLine ( x+350-390,y+520-450,x+390-390,y+480-450);
+    txLine ( x+350-390,y+590-450,x+390-390,y+560-450);
+    txLine ( x+390-390,y+560-450,x+420-390,y+590-450);
+
+}
+
+void drawGreb(int x, int y,double r)
+{
+    txSetColor (TX_WHITE  );
+    txSetFillColor (TX_WHITE );
+    txRectangle(x+(110-110)*r , y+(110-130)*r, x+(120-110)*r, y+(130-130)*r);
+
+    txSetColor (TX_BROWN );
+    txSetFillColor (TX_BROWN);
+    txPie (x+(100-110)*r, y+(100-130)*r, x+(130-110)*r, y+(130-130)*r, 0, 180);
+}
+
+void drawTitrsBegin(int y)
+{
+    txSetColor(TX_WHITE);
+    txSelectFont ("Arial", 40, 0, FW_BOLD);
+    txDrawText   (100, y, 1100, y+200, "Мультипликацинный фильм\n\n");
+    txSelectFont ("Arial", 60, 0, FW_BOLD);
+    txDrawText   (100, y+100, 1100, y+300, "НЕОЖИДАННОЕ ПУТЕШЕСТВИЕ");
+}
+
+void drawDialog(int x, int y, int rFont, const char* text)
+{
+
+    txSetColor (TX_BLACK);
+    txSetFillColor (TX_WHITE);
+    txEllipse(x, y, x+100, y+50);
+    txSelectFont ("Times New Roman", rFont);
+    txDrawText(x, y, x+100, y+50, text);
+}
+
+void drawTitrsFinal(int y)
+{
+    txSetColor(TX_WHITE);
+    txSelectFont ("Arial", 60, 0, FW_BOLD);
+    txDrawText   (100, y, 1100, y+100, "КОНЕЦ");
+    txSelectFont ("Arial", 40, 0, FW_BOLD);
+    txDrawText   (100, y+100, 1100, y+150, "В ролях:");
+    txSelectFont ("Arial", 10);
+    txDrawText   (100, y+200, 1100, y+400, "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+                                          "  eriweuiuiu  qwuriqepriu\n"
+                                          "wfsdalsdkgsd  wjelkjwkjflskjd\n"
+
+
+
+                                          );
+}
+
+
+int main()
+{
+txCreateWindow (1200, 700);
+
+    int yTitrs = 700;
+    int xSun = 130;
+    int xCloud =300;
+    int xMan1=390;
+    int xMan2=500;
+    int xMan3=510;
+    int yMan1 = 450;
+    int xDoor=490;
+    int yGreb=450;
+    double r=1;
+    int yOzero=800;
+    int xlodka=570;
+    int ylodka=900;
+
+
+    while(yTitrs>200)
+    {
+        txSetColor(TX_BLACK);
+        txSetFillColor(TX_BLACK);
+        txRectangle(0, 0, 1200, 700);
+        drawTitrsBegin(yTitrs);
+        yTitrs -= 5;
+
+        txSleep(20);
+    }
+
+    txSetColor(TX_BLACK);
+    txSetFillColor(TX_BLACK);
+    txRectangle(0, 0, 1200, 700);
+    drawTitrsBegin(yTitrs);
+    txSleep(2000);
+
+
+    while(yTitrs>-300)
+    {
+        txSetColor(TX_BLACK);
+        txSetFillColor(TX_BLACK);
+        txRectangle(0, 0, 1200, 700);
+        drawTitrsBegin(yTitrs);
+        yTitrs -= 5;
+
+        txSleep(20);
+    }
+
+
+    //1 Движение солнце, облако, 2 человека
+    while(xSun < 950)
+    {
+        txBegin();
+        drawSky();
+        drawLand();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawHouse();
+        drawDoor(xDoor);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan2, 450,TX_RED);
+        drawMan(xMan3, 450,TX_CYAN);
+
+        xCloud = xCloud - 5;
+        xSun = xSun + 5;
+        xMan1=xMan1 -10;
+        xMan3=xMan3 -10;
+        txEnd();
+        txSleep(10);
+
+    }
+
+    //2 движение 2 человека
+    while(xMan1 < 450)
+    {
+        txBegin();
+        drawSky2();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawDoor(xDoor);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawHouse();
+        drawMan(xMan3, 450,TX_CYAN);
+        drawMan(xMan2, 450,TX_RED);
+
+        txSleep(10);
+        xMan1=xMan1 +10;
+        xMan3=xMan3 +10;
+
+    }
+
+    //3 Движение 3 человека
+    while(xMan3 >-10)
+    {
+        txBegin();
+        drawSky2();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawDoor(xDoor);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawHouse();
+        drawMan(xMan3, 450,TX_CYAN);
+        drawMan(xMan2, 450,TX_RED);
+
+        xMan1=xMan1 -10;
+        xMan2=xMan2 -10;
+        xMan3=xMan3 -10;
+        txEnd();
+        txSleep(10);
+
+    }
+
+    //4 дверь открывается
+    while(xDoor > 400)
+    {
+        txBegin();
+        drawSky2();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        drawHouse();
+        drawDoor(xDoor);
+
+        xMan1=xMan1 +10;
+        xMan3=xMan3 +10;
+        xDoor-= 10;
+        txEnd();
+        txSleep(10);
+    }
+
+    //5 Человек заходит
+    while(xMan1 < 450)
+    {
+        txBegin();
+        drawSky2();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        drawHouse();
+        drawDoor(xDoor);
+
+        xMan1=xMan1 +10;
+        xMan3=xMan3 +10;
+        txEnd();
+        txSleep(10);
+    }
+
+    //6 Дверь закрывается
+    while(xDoor < 500)
+    {
+        txBegin();
+        drawSky2();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        drawHouse();
+        drawDoor(xDoor);
+        xDoor+= 10;
+        txEnd();
+        txSleep(10);
+    }
+
+    //7 Дверь открывается
+    while(xDoor > 400)
+    {
+        txBegin();
+        drawSky2();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        drawHouse();
+        drawDoor(xDoor);
+        xDoor-= 10;
+        txEnd();
+        txSleep(10);
+    }
+
+    //заходит в дом
+    while(xMan1 < 650)
+    {
+        txBegin();
+        drawSky2();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        drawHouse();
+        drawDoor(xDoor);
+        xMan1=xMan1 + 20;
+        txEnd();
+        txSleep(10);
+    }
+
+    //дверь закрываеться
+    while(xDoor < 500)
+    {
+        txBegin();
+        drawSky2();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        drawHouse();
+        drawDoor(xDoor);
+        xDoor+= 10;
+        txEnd();
+        txSleep(10);
+    }
+
+    //открываеться дверь
+    while(xDoor > 400)
+    {
+        txBegin();
+        drawSky();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        drawHouse();
+        drawDoor(xDoor);
+        xDoor-= 10;
+        txEnd();
+        txSleep(10);
+    }
+
+    //человек выходит
+    while(xMan1 > 350)
+    {
+        txBegin();
+        drawSky();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        drawHouse();
+        drawDoor(xDoor);
+        xMan1=xMan1 -20;
+        txEnd();
+        txSleep(10);
+    }
+    //дверь закрываеться
+    while(xDoor < 500)
+    {
+        txBegin();
+        drawSky();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        drawHouse();
+        drawDoor(xDoor);
+        xDoor+= 10;
+        txEnd();
+        txSleep(10);
+    }
+    //дверь открываеться
+    while(xDoor > 400)
+    {
+        txBegin();
+        drawSky();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        drawHouse();
+        drawDoor(xDoor);
+        xMan3=xMan3 +20;
+        xDoor-= 10;
+        txEnd();
+        txSleep(10);
+    }
+
+    //человек выходит
+    while(xMan3 > 450)
+    {
+        txBegin();
+        drawSky();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        drawHouse();
+        drawDoor(xDoor);
+        xMan3=xMan3 -20;
+        txEnd();
+        txSleep(10);
+    }
+
+    //дверь закрываеться
+    while(xDoor < 500)
+    {
+        txBegin();
+        drawSky();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        drawHouse();
+        drawDoor(xDoor);
+        xDoor+= 10;
+        txEnd();
+        txSleep(10);
+    }
+
+    while(xMan1 < 1250)
+    {
+        txBegin();
+        drawSky();
+        drawLand();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawHouse();
+        drawDoor(xDoor);
+        drawMan(xMan1, 450, TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        xMan1=xMan1 + 20;
+        xMan3=xMan3 + 20;
+        txEnd();
+        txSleep(10);
+    }
+
+    //начало похода грибами
+    xMan1 = - 120;
+    xMan3 = - 10;
+    while(xMan1 < 1250)
+    {
+        txBegin();
+        drawSky();
+        drawLand();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+
+        xMan1=xMan1 +20;
+        xMan3=xMan3 +20;
+        txEnd;
+        txSleep(10);
+    }
+
+    xMan1 = - 120;
+    xMan3 = - 10;
+    while(xMan1 < 1250)
+    {
+        txBegin();
+        drawSky2();
+        drawLand();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        xMan1=xMan1 +30;
+        xMan3=xMan3 +30;
+        txEnd;
+        txSleep(10);
+
+    }
+
+    xMan1 = - 120;
+    xMan3 = - 10;
+    while(xMan1 < 1250)
+    {
+        txBegin();
+        drawSky();
+        drawLand2();
+        for(int i=120; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,340);
+        }
+
+        for(int i=190; i<=1120 ; i=i+150)
+        {
+            drawtrees(i,380);
+        }
+
+        drawSun(xSun);
+        drawCloud(xCloud);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        xMan1=xMan1 +20;
+        xMan3=xMan3 +20;
+        txEnd;
+        txSleep(10);
+
+    }
+
+    //КОНЕЧНАЯ ОСТАНОВКА ПОХОДА
+    xMan1 = - 120;
+    xMan3 = - 10;
+    while(xMan1 < 30)
+    {
+        txBegin();
+        drawSky();
+        drawSun(xSun);
+        drawLand2();
+
+        for(int x=110; x<=1120 ; x=x+40)
+        {
+            for(int y=450; y<=720 ; y=y+40)
+            {
+                drawGreb(x,y,r);
+            }
+        }
+
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+
+        xMan1=xMan1 + 10;
+        xMan3=xMan3 + 10;
+        txEnd;
+        txSleep(10);
+
+    }
+
+    drawDialog(xMan1+20, 350, 25, "Ё-моЁ");
+
+    txSleep(3000);
+
+    while(yGreb < 750)
+    {
+        txBegin();
+        drawSky();
+        drawSun(xSun);
+        drawLand2();
+
+        for(int x=110; x<=1120 ; x=x+40)
+        {
+            for(int y=450; y<=720; y=y+40)
+            {
+                drawGreb(x,yGreb,r);
+            }
+        }
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+
+        yGreb += 10;
+        txEnd;
+        txSleep(10);
+    }
+    txSleep(3000);
+
+    while(yOzero > 400)
+    {
+        txBegin();
+        drawSky();
+        drawSun(xSun);
+        drawLand2();
+        drawOzero1(yOzero);
+        drawOzero2(yOzero);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        yOzero -= 10;
+        txEnd;
+        txSleep(10);
+
+    }
+
+    while(ylodka > 440)
+    {
+        txBegin();
+        drawSky();
+        drawSun(xSun);
+        drawLand2();
+        drawOzero1(yOzero);
+        drawlodka(xlodka, ylodka);
+        drawOzero2(yOzero);
+        drawMan(xMan1, 450,TX_ORANGE);
+        drawMan(xMan3, 450,TX_CYAN);
+        ylodka -= 3;
+        txEnd;
+        txSleep(10);
+
+    }
+
+    while(xMan1 < 400)
+    {
+        txBegin();
+        drawSky();
+        drawSun(xSun);
+        drawLand2();
+        drawOzero1(yOzero);
+        drawlodka(xlodka, ylodka);
+        drawOzero2(yOzero);
+        drawMan(xMan1, yMan1,TX_ORANGE);
+        drawMan(xMan3, yMan1,TX_CYAN);
+
+        xMan1=xMan1 +5;
+        xMan3=xMan3 +5;
+        yMan1=yMan1 -1;
+        txEnd;
+
+        txSleep(10);
+
+    }
+
+    while(xlodka > -1000)
+    {
+        txBegin();
+        drawSky();
+        drawSun(xSun);
+        drawLand2();
+        drawOzero1(yOzero);
+        drawOzero2(yOzero);
+        drawMan(xMan1, yMan1,TX_ORANGE);
+        drawMan(xMan3, yMan1,TX_CYAN);
+        drawlodka(xlodka, ylodka);
+        xMan1=xMan1 - 5;
+        xMan3=xMan3 - 5;
+        xlodka -= 5;
+        txEnd;
+
+        txSleep(10);
+    }
+
+    yTitrs = 600;
+    while(yTitrs>-600)
+    {
+        txSetFillColor(TX_BLACK);
+        txRectangle(0, 0, 1200, 700);
+        drawTitrsFinal(yTitrs);
+        yTitrs -= 3;
+
+        txSleep(20);
+    }
+
+txTextCursor (false);
+return 0;
+ }
